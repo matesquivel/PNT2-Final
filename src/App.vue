@@ -1,26 +1,86 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <h1>Convertidor de Distancia</h1>
+
+    <div class="row">
+      <label for="km">Kilómetros (km):</label>
+      <input
+        id="km"
+        type="number"
+        v-model.number="kilometersProxy"
+        step="any"
+      />
+    </div>
+
+    <p :style="{ color: textColor }">Metros (m): {{ meters }}</p>
+    <p :style="{ color: textColor }">Millas (mi): {{ miles }}</p>
+
+    <p>respuestas: 1:c,f 2:b 3:c 4:a 5:b</p>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { useDistanceStore } from "@/stores/distance.store";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+
+  data() {
+    return {
+      store: useDistanceStore(),
+    };
+  },
+
+  computed: {
+    kilometersProxy: {
+      get() {
+        return this.store.kilometers;
+      },
+      set(value) {
+        this.store.setKilometers(value);
+      },
+    },
+
+    meters() {
+      return this.store.meters;
+    },
+
+    miles() {
+      return this.store.miles;
+    },
+
+    textColor() {
+      return this.store.textColor;
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.container {
+  max-width: 520px;
+  margin: 60px auto;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+label {
+  width: 140px;
+}
+
+input {
+  width: 160px;
+  padding: 6px 8px;
 }
 </style>
