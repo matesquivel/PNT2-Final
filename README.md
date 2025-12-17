@@ -1,4 +1,4 @@
-# convertidor-distancia
+# PNT2-Final
 
 ## Project setup
 ```
